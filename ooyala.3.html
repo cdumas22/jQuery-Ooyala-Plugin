@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<head>
+	<LINK REL="StyleSheet" HREF="default.css" TYPE="text/css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	<script src="jQuery.ooyala.v3.js" type="text/javascript"></script>
+</head>
+<body>
+	<script src="s_code.js"></script>
+	<script>
+		s.pageName = 'ooyala-video-test';
+	</script>
+	<header>
+		<h1>jQuery Ooyala Player Documentation</h1>
+		<h3>Written By Cameron Dumas</h3>
+		<nav>
+			<ul>
+				<li><a href='index.html' class="ooyala-logo"><img src='http://support.ooyala.com/sites/all/themes/supporttheme/images/logo.png'/> Plugin</a></li>
+				<li><a href='ooyala.3.html' class="ooyala-logo"><img src='http://support.ooyala.com/sites/all/themes/supporttheme/images/logo.png'/> Plugin V3</a></li>
+				<li><a href='brightcove.html' class="brightcove-logo"><img src='https://img.brightcove.com/logo-white.png'/> Plugin</a></li>
+			</ul
+		</nav>
+	</header>
+	<section>
+		<div class='methods' style="padding-bottom:150px;">
+				<p>To create a player on the page you use the jquery selector to select a DOM element then call the ooyala method with any of the parameters that you would like to set.
+				This will create the player in the element you specified, with all the parameters you specified.</p>
+				<aside class='example'>
+					$("#player1").ooyala({<br/>
+						embedCode: '00000000000000000000000000000000',</br>
+						height: 355,</br>
+						width:460</br>
+					});
+				</aside>
+				
+				<p>
+					<a target="blank" href="jQuery.ooyala.v3.js">DOWNLOAD</a>
+				</p>
+			</div>
+		<div class="example" style="height:400px">
+			
+			<div id="player1"></div>
+			<div id="log"></div>
+			<input type="button" onclick="$('#player1').ooyala('play')" value="play"/>
+			<input type="button" onclick="$('#player1').ooyala('pause')" value="pause"/>
+			<input type="button" onclick="$('#player1').ooyala('stop')" value="stop"/>
+			<input type="button" onclick="$('#player1').ooyala('seek', 25)" value="seek 25"/>
+			<input type="button" onclick="alert($('#player1').ooyala('volume'))" value="volume"/>
+			<input type="button" onclick="$('#player1').ooyala('volume', 0.5)" value="set volume 50%"/>
+			<input type="button" onclick="alert($('#player1').ooyala('embedCode'))" value="embedCode"/>
+			<input type="button" onclick="console.log($('#player1').ooyala('data'))" value="data"/>
+			<input type="button" onclick="$('#player1').ooyala('destroy')" value="destroy"/>
+			<input type="button" onclick="build()" value="build"/>
+			<input type="button" onclick="$('#player1').ooyala('play', 'llMDQ6rMWxVWbvdxs2yduVEtSrNCJUk1')" value="change video"/>
+			<script>
+				var height = $("#log").height();
+				var log = function(message) {
+					var s = new Date().toLocaleTimeString() + " :: " + message + "<br/>";
+					$("#log").append(s);
+					height += 20;
+					$("#log").scrollTop(height);
+				}
+				var build = function() {
+					$("#player1").ooyala({
+						height:355,
+						width:460,
+						//namespace: 'testooyala',
+						platform: 'html5-priority',
+						embedCode: 'h2eDlxNTqJIAQuhsL3EWqDajpId_6ec2', //'9yNmhmMjqFo9h1GSeHr0uE2Wgccet-C6',
+						events: {
+							BUFFERING: function(event, param) {
+								log(event + ': ' +  param);
+							},	
+							BUFFERED: function(event, param) {
+								log(event + ': ' +  param);
+							},	
+							DESTROY: function(event, param) {
+								log(event + ': ' +  param);
+							},	
+							DOWNLOADING: function(event, param) {
+								log(event + ': ' +  param);
+							},	
+							ERROR: function(event, param) {
+								log(event + ': ' +  param);
+							},	
+							PAUSE: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							PAUSED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							PLAY: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							PLAYING: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							PLAY_FAILED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							PLAYED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							SEEK: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							SIZE_CHANGED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							WILL_FETCH_AD_AUTHORIZATION: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							AD_AUTHORIZATION_FETCHED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							WILL_FETCH_AUTHORIZATION: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							AUTHORIZATION_FETCHED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							WILL_FETCH_ADS: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							WILL_PLAY_ADS: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							ADS_PLAYED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							FIRST_AD_FETCHED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							AD_CONFIG_READY: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							WILL_SHOW_COMPANION_ADS: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							WILL_FETCH_CONTENT_TREE: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							CONTENT_TREE_FETCHED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							SET_EMBED_CODE: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							EMBED_CODE_CHANGED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							WILL_CHANGE_FULLSCREEN: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							FULLSCREEN_CHANGED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							WILL_FETCH_METADATA: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							METADATA_FETCHED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							MIDROLL_PLAY_FAILED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							WILL_PLAY: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							WILL_PLAY_FROM_BEGINNING: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							PLAYER_CREATED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							PLAYBACK_READY: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							PLAYHEAD_TIME_CHANGED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							WILL_RESUME_MAIN_VIDEO: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							PRELOAD_STREAM: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							WILL_PLAY_STREAM: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							PLAY_STREAM: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							PAUSE_STREAM: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							STREAM_PLAYING: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							STREAM_PLAY_FAILED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							STREAM_PAUSED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							STREAM_PLAYED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							SEEK_STREAM: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							PLAY_MIDROLL_STREAM: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							MIDROLL_STREAM_PLAYED: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							CHANGE_VOLUME: function(event, param) {
+								log(event + ': ' +  param);
+							},
+							VOLUME_CHANGED: function(event, param) {
+								log(event + ': ' +  param);
+							}
+						}
+					});
+				}
+				build();
+			</script>
+		</div>
+		<h1>Defaults</h1> 
+		<div class="example">
+			<p class='comment'>/*query string parameters*/</p>
+			<p>height: 355,</p>
+        	<p>width: 425,</p>
+        	<p>embedCode: "hpbnExMjqlog8G5Zdzkee4DwyAd1Ymba",</p>
+        	<p>platform: "flash",</p>
+        	<p>autoPlay: false,</p>
+			<p>chromeless: false,</p>
+		</div>
+	</section>
+	<section>
+		<h1>Documentation of Player Defaults</h1>
+			<p>see the ooyala player documentation for more information <a href='http://www.ooyala.com/support/docs/player_api'>Player API</a></p>
+		<section class="player-preferences">
+			<h1>Player Configuration Parameters</h1>
+			
+			<h3>height</h3>
+			<p>Assign the height of the player.  By default this is at 355px.</p>
+	
+			<h3>width</h3>
+			<p>Assign the width of the player.  By default this is at 425px.</p>
+	
+			<h3>embedCode</h3>
+			<p>Assign the embedCode for the initial Ooyala video to play in the player.</p>
+			
+			<h3>platform</h3>
+			<p>which platform do you want the player to try to default to.</p>
+			
+			<h3>autoPlay</h3>
+			<p>This attribute will autoplay upon load, this wont work when done on an iOS device. Values can be true or false.</p>
+			
+			<h3>chromeless</h3>
+			<p>removes all controls from the player, and only shows the video. Values can be true or false</p>
+		</section>
+		<section class="basic-callbacks">
+			<h1> Basic Callbacks</h1>
+			
+			<h3>OO.EVENTS</h3>
+			<p>see <a href='http://support.ooyala.com/developers/documentation/reference/player_v3_api_events.html'>OOYALA EVENTS API</a></p>
+		</section>
+	</section>
+	<section>
+		<h1>Documentation of Player Methods</h1>
+		<section class="methods">
+			<h3>play</h3>
+			<p>
+				Play has three different implementations. The first, is to play the active video, if you do not specify a parameter. 
+			</p>
+			<aside class='example'>
+				$("#player1").ooyala("play");
+			</aside>
+			<p>
+				If you specify a parameter, and that parameter is a string, then the player will cue and play the specified video. 
+			</p>
+			<aside class='example'>
+				$("#player1").ooyala("play", "hpbnExMjqlog8G5Zdzkee4DwyAd1Ymba");
+			</aside>
+			<p>
+				Lastly, if you specify a parameter, and that parameter is an OBJECT, you will have the ability to pass in the id and the start time -- {embedCode: "",time:""}.
+			</p>
+			<aside class='example'>
+				$("#player1").ooyala("play", {
+						embedCode: "hpbnExMjqlog8G5Zdzkee4DwyAd1Ymba",
+						height: 20,
+						width: 20
+					});
+			</aside>
+			
+			<h3>pause</h3>
+			
+			<p>pauses the video</p>
+			<aside class='example'>
+				$("#player1").ooyala("pause");
+			</aside>
+			<h3>stop</h3>
+			<p>Stops the video and moves the playhead to the start of the video</p>
+			<aside class='example'>
+				$("#player1").ooyala("stop");
+			</aside>
+			<h3>seek</h3>
+			<p>specify a time in seconds for the player to seek to and the player will skip to that time. This also triggers the onSeek event.</p>
+			<aside class='example'>
+				$("#player1").ooyala("seek", 20);
+			</aside>
+			
+			<h3>fastForward</h3>
+			<p>specify a time in seconds to fast forward the video, takes the current time and adds the time</p>
+			<aside class='example'>
+				$("#player1").ooyala("fastForward", 20);
+			</aside>
+			
+			<h3>rewind</h3>
+			<p>specify a time in secounds to rewind the video, takes the current time and subtracts the time.</p>
+			<aside class='example'>
+				$("#player1").ooyala("rewind", 20);
+			</aside>
+			
+			<h3>volume</h3>
+			<p>Volume has two variations - getter and setter. Simply pass in "volume" to get the volume {0,1}, </p>
+			<aside class='example'>
+				$("#player1").ooyala("volume");
+			</aside>
+			<p>and pass a parameter within { 0, 1} to specify a new volume.</p>
+			<aside class='example'>
+				$("#player1").ooyala("volume", .2);
+			</aside>
+			
+			<h3>embedCode</h3>
+			<p>returns the current embed code for the video that is playing</p>
+			<aside class='example'>
+				$("#player1").ooyala("embedCode");
+			</aside>
+			<h3>data</h3>
+			<p>
+				Typically you will want to access the information thats available 
+				from the player. The data method returns an object with the information 
+				of the player. The object includes information on the video (embedCode, title, description, time, lineup, promo, hostedAtURL)
+				any errors that just occured (error.code, error.text), the status of the player (fullscreen, nomal),
+				the information of the item (this may include channel information),
+				the volume, the playhead time, the state of the player, all the available bitrates and qualities for the player,
+				the target bitrate and quality, and how much as buffered
+			</p>
+			<aside class='example'>
+				$("#player1").ooyala("data");
+			</aside>
+			<h3>player</h3>
+			<p>this will return the actual player object from the DOM. This is helpful when you would like to use things from the ooyala api that my not be implemented the way you would like in the plugin.</p>
+			<aside class='example'>
+				$("#player1").ooyala("player");
+			</aside>
+			<h3>destroy</h3>
+			<p>Removes the player from the page, and unbinds everything that the player is bound to (events, data, DOM)</p>
+			<aside class='example'>
+				$("#player1").ooyala("destroy");
+			</aside>
+			
+			<h3>closedCaptions</h3>
+			<p>The method allows you to either get or set the closedCaption language for the current video<br/><br/><br/><br/></p>
+			<aside class='example'>
+				$("#player1").ooyala("closedCaptions");
+			</aside>
+			<aside class='example'>
+				$("#player1").ooyala("closedCaptions", "Portuguese");
+			</aside>
+			
+			<h3>timedText</h3>
+			<p>Gets the closed caption text for a from a specified start to end time in seconds.</p>
+			<aside class='example'>
+				$("#player1").ooyala("timedText", { start: 65, end: 142 });
+			</aside>
+			
+			<h3>event</h3>
+			<p>Allows the adding or removal of events from the player after the player has been created.<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></p>
+			<aside class='example'>
+				$("#player1").ooyala("event", {
+					event: 'PLAYING', 
+					fn: function(event, param) {
+						...
+					}
+				});
+			</aside>
+			<aside class='example'>
+				Remove Event <br/>
+				$("#player1").ooyala("event", 'PLAYING');
+			</aside>
+		</section>
+	</section>
+		
+		
+		
+</body>

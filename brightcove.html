@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<head>
+	<LINK REL="StyleSheet" HREF="default.css" TYPE="text/css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	<script src="jQuery.brightcove.js" type="text/javascript"></script>
+</head>
+<body>
+	<header>
+		<h1>jQuery Brightcove Player Documentation</h1>
+		<h3>Written By Cameron Dumas</h3>
+		<nav>
+			<ul>
+				<li><a href='index.html' class="ooyala-logo"><img src='http://support.ooyala.com/sites/all/themes/supporttheme/images/logo.png'/> Plugin</a></li>
+				<li><a href='ooyala.3.html' class="ooyala-logo"><img src='http://support.ooyala.com/sites/all/themes/supporttheme/images/logo.png'/> Plugin V3</a></li>
+				<li><a href='brightcove.html' class="brightcove-logo"><img src='https://img.brightcove.com/logo-white.png'/> Plugin</a></li>
+			</ul
+		</nav>
+	</header>
+	<section>
+		<div class='methods' style="padding-bottom:130px;">
+				<p>To create a player on the page you use the jquery selector to select a DOM element then call the brightcove method with any of the parameters that you would like to set.
+				This will create the player in the element you specified, with all the parameters you specified.</p>
+				
+				<aside class='example'>
+					$("#player1").brightcove({<br/>
+						height: 355,</br>
+						width:460</br>
+					});
+				</aside>
+				
+				<p>
+					<a target="blank" href="jQuery.brightcove.js">DOWNLOAD</a>
+				</p>
+			</div>
+		<div class="example" style="height:400px">
+			
+			<div id="player1"></div>
+			<div id="log"></div>
+			<input type="button" onclick="$('#player1').brightcove('play')" value="play"/>
+			<input type="button" onclick="$('#player1').brightcove('pause')" value="pause"/>
+			<input type="button" onclick="$('#player1').brightcove('seek', 25)" value="seek 25"/>
+			<input type="button" onclick="alert($('#player1').brightcove('volume'))" value="volume"/>
+			<input type="button" onclick="$('#player1').brightcove('volume', 0.5)" value="set volume 50%"/>
+			<input type="button" onclick="$('#player1').brightcove('destroy')" value="destroy"/>
+			<input type="button" onclick="build()" value="build"/>
+			<input type="button" onclick="$('#player1').brightcove('play', {videoId:'734451479001', time:10})" value="change video"/>
+			<script>
+				var height = $("#log").height();
+				var log = function(message) {
+					var s = new Date().toLocaleTimeString() + " :: " + message + "<br/>";
+					$("#log").append(s);
+					height += 20;
+					$("#log").scrollTop(height);
+				}
+				var build = function() {
+				$("#player1").brightcove({
+					height:355,
+					width:460,
+					videoId: "1331767542001",
+					playerKey: "AQ~~,AAAAjP0hwEk~,MIOCBvNtNJlev6NdpjXj8V6wbnt8hru1",
+					playhead: 25,
+					autoplay:false,
+					onStart: function() {
+						log("start");
+					},
+					onComplete: function() {
+						log("complete");
+					},
+					onPlay: function() {
+						log("play");
+					},
+					onPause: function(playerObj) {
+						log("pause");
+						console.log(playerObj);
+					},
+					onBuffering: function() {
+						log("buffering");
+					},
+					onPlayheadTimeChanged: function(obj) {
+						log("playhead time Change: " + obj.position);
+						console.log(obj);
+					},
+					onSeek: function (playerObj) { 
+						log("seek: " + playerObj.position);
+						console.log(playerObj);
+					},
+					onChangeVideo: function (playerObj) { 
+						log("Change Video");
+						console.log(playerObj);
+					}, 
+					onVolumeChanged: function (playerObj) {
+						log("Volume Change");
+						console.log(playerObj);
+					}
+				});
+				}
+				build();
+			</script>
+		</div>
+		<h1>Defaults</h1> 
+		<div class="example">
+			<p class='comment'>/*query string parameters*/</p>
+			<p>height: 355,</p>
+        	<p>width: 425,</p>
+        	<p>videoId: "1331767542001",</p>
+			<p>playerKey: "AQ~~,AAAAjP0hwEk~,MIOCBvNtNJlev6NdpjXj8V6wbnt8hru1",</p>
+        	<p>playhead: 0,</p>
+        	<p>autoPlay: false,</p>
+			<br/>
+			<p class='comment'>/*player events*/</p>
+			<p>onPlay: function (playerObject) { },</p>
+        	<p>onPause: function (playerObject) { },</p>
+        	<p>onStart: function (playerObject) { },</p>
+			<p>onComplete: function (playerObject) { },</p>
+        	<p>onBuffering: function (playerObject) { },</p>
+        	<p>onSeek: function (playerObject) { },</p>
+			<p>onPlayheadTimeChanged: function(playerObject) { },</p>
+			<p>onChangeVideo: function(playerObject) { },</p>			
+			<p>onVolumeChanged: function(playerObject) { },</p>
+		</div>
+	</section>
+		
+	<section>
+		<h1>Documentation of Player Defaults</h1>
+			<p>see the brightcove player documentation for more information <a href='http://support.brightcove.com/en/'>Player API</a></p>
+		<section class="player-preferences">
+			<h1>Player Configuration Parameters</h1>
+			
+			<h3>height</h3>
+			<p>Assign the height of the player.  By default this is at 355px.</p>
+	
+			<h3>width</h3>
+			<p>Assign the width of the player.  By default this is at 425px.</p>
+	
+			<h3>videoId</h3>
+			<p>Assign the videoId for the initial Brightcove video to play in the player.</p>
+			
+			<h3>playerKey</h3>
+			<p>Assign the player that will load. The videoId has to be compatable with the playerKey that is used.</p>
+			
+			<h3>playhead</h3>
+			<p>The time at which the video will start playing.</p>
+			
+			<h3>autoPlay</h3>
+			<p>This attribute will autoplay upon load. Values can be true or false.</p>
+			
+			
+		</section>
+		<section class="basic-callbacks">
+			<h1> Basic Callbacks</h1>
+
+			<h3>onPlay</h3>
+			<p>After the player triggers a play event, the onPlay method is called and passed the id that was played. This can come in handy in situations where you may want to track / utilize the play event and possibly hook in your analytics.</p>
+			
+			<h3>onPause</h3>
+			<p>Similar to onPlay, onPause is called after the player is paused. Autoplay is set for the player and not the video.  So when you change the video it will use this variable to know to autoplay or not.</p>
+			
+			<h3>onStart</h3>
+			<p> onStart is triggered when the video first starts to play or is loaded.</p>
+			
+			<h3>onComplete</h3>
+			<p> onComplete is triggered when the current video reaches the end.</p>
+			
+			<h3>onBuffering</h3>
+			<p>onBuffering is triggered both when the video starts and completes buffering.</p>
+			
+			<h3>onSeek</h3>
+			<p>onSeek is triggered whenever the video timeline is moved to a different time. It recieves the object playerObject which has the parameter position which is the current position of the playhead.</p>
+			
+			<h3>onPlayheadTimeChanged</h3>
+			<p>onPlayheadTimeChanged is called while the video is playing and gives the current playhead time.  Recieves the same object as seek.</p>
+			
+			<h3>onChangeVideo</h3>
+			<p>when the video in the video player changes.</p>
+			
+			<h3>onVolumeChanged</h3>
+			<p>when the volume of the video player changes</p>
+		</section>
+	</section>
+	<section>
+		<h1>Documentation of Player Methods</h1>
+		<section class="methods">
+			<h3>play</h3>
+			<p>
+				Play has three different implementations. The first, is to play the active video, if you do not specify a parameter. 
+			</p>
+			<aside class='example'>
+				$("#player1").brightcove("play");
+			</aside>
+			<p>
+				If you specify a parameter, and that parameter is a string, then the player will play the specified video. 
+			</p>
+			<aside class='example'>
+				$("#player1").brightcove("play", "734451479001");
+			</aside>
+			<p>
+				Lastly, if you specify a parameter, and that parameter is an OBJECT, you will have the ability to pass in the id and the start time -- {videoId: "",time:""}.
+			</p>
+			<aside class='example'>
+				$("#player1").brightcove("play", {
+						videoId: "734451479001",
+						time: 10
+					});
+			</aside>
+			
+			<h3>pause</h3>
+			
+			<p>pauses the video</p>
+			<aside class='example'>
+				$("#player1").brightcove("pause");
+			</aside>
+			
+			<h3>seek</h3>
+			<p>specify a time in seconds for the player to seek to and the player will skip to that time. This also triggers the onSeek event.</p>
+			<aside class='example'>
+				$("#player1").brightcove("seek", 20);
+			</aside>
+			
+			<h3>fastForward</h3>
+			<p>specify a time in seconds to fast forward the video, takes the current time and adds the time</p>
+			<aside class='example'>
+				$("#player1").brightcove("fastForward", 20);
+			</aside>
+			
+			<h3>rewind</h3>
+			<p>specify a time in secounds to rewind the video, takes the current time and subtracts the time.</p>
+			<aside class='example'>
+				$("#player1").brightcove("rewind", 20);
+			</aside>
+			
+			<h3>volume</h3>
+			<p>Volume has two variations - getter and setter. Simply pass in "volume" to get the volume {0,1}, </p>
+			<aside class='example'>
+				$("#player1").brightcove("volume");
+			</aside>
+			<p>and pass a parameter within { 0, 1} to specify a new volume.</p>
+			<aside class='example'>
+				$("#player1").brightcove("volume", .2);
+			</aside>
+			
+			<h3>player</h3>
+			<p>this will return the actual player object from the DOM. This is helpful when you would like to use things from the brightcove api that my not be implemented the way you would like in the plugin.</p>
+			<aside class='example'>
+				$("#player1").brightcove("player");
+			</aside>
+			<h3>destroy</h3>
+			<p>Removes the player from the page, and unbinds everything that the player is bound to (events, data, DOM)</p>
+			<aside class='example'>
+				$("#player1").brightcove("destroy");
+			</aside>
+		</section>
+	</section>
+		
+		
+		
+</body>

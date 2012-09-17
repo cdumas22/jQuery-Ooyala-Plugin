@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<head>
+	<LINK REL="StyleSheet" HREF="default.css" TYPE="text/css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	<script src="jQuery.ooyala.js" type="text/javascript"></script>
+</head>
+<body>
+	<script src="s_code.js"></script>
+	<script>
+		s.pageName = 'ooyala-video-test';
+	</script>
+	<header>
+		<h1>jQuery Ooyala Player Documentation</h1>
+		<h3>Written By Cameron Dumas</h3>
+		<nav>
+			<ul>
+				<li><a href='index.html' class="ooyala-logo"><img src='http://support.ooyala.com/sites/all/themes/supporttheme/images/logo.png'/> Plugin</a></li>
+				<li><a href='ooyala.3.html' class="ooyala-logo"><img src='http://support.ooyala.com/sites/all/themes/supporttheme/images/logo.png'/> Plugin V3</a></li>
+				<li><a href='brightcove.html' class="brightcove-logo"><img src='https://img.brightcove.com/logo-white.png'/> Plugin</a></li>
+			</ul
+		</nav>
+	</header>
+	<section>
+		<div class='methods' style="padding-bottom:150px;">
+				<p>To create a player on the page you use the jquery selector to select a DOM element then call the ooyala method with any of the parameters that you would like to set.
+				This will create the player in the element you specified, with all the parameters you specified.</p>
+				<aside class='example'>
+					$("#player1").ooyala({<br/>
+						embedCode: '00000000000000000000000000000000',</br>
+						height: 355,</br>
+						width:460</br>
+					});
+				</aside>
+				
+				<p>
+					<a target="blank" href="jQuery.ooyala.js">DOWNLOAD</a>
+				</p>
+			</div>
+		<div class="example" style="height:400px">
+			
+			<div id="player1"></div>
+			<div id="log"></div>
+			<input type="button" onclick="$('#player1').ooyala('play')" value="play"/>
+			<input type="button" onclick="$('#player1').ooyala('pause')" value="pause"/>
+			<input type="button" onclick="$('#player1').ooyala('stop')" value="stop"/>
+			<input type="button" onclick="$('#player1').ooyala('seek', 25)" value="seek 25"/>
+			<input type="button" onclick="alert($('#player1').ooyala('volume'))" value="volume"/>
+			<input type="button" onclick="$('#player1').ooyala('volume', 0.5)" value="set volume 50%"/>
+			<input type="button" onclick="alert($('#player1').ooyala('quality').targetBitrateQuality)" value="quality"/>
+			<input type="button" onclick="alert($('#player1').ooyala('quality').targetBitrate)" value="bitrate"/>
+			<input type="button" onclick="$('#player1').ooyala('quality', 'medium')" value="set Quality (medium)"/>
+			<input type="button" onclick="$('#player1').ooyala('quality', 100)" value="set bitrate 100"/>
+			<input type="button" onclick="alert($('#player1').ooyala('embedCode'))" value="embedCode"/>
+			<input type="button" onclick="console.log($('#player1').ooyala('data'))" value="data"/>
+			<input type="button" onclick="$('#player1').ooyala('destroy')" value="destroy"/>
+			<input type="button" onclick="build()" value="build"/>
+			<input type="button" onclick="console.log($('#player1').ooyala('related'))" value="related"/>
+			<input type="button" onclick="console.log($('#player1').ooyala('metadata'))" value="metadata"/>
+			<input type="button" onclick="$('#player1').ooyala('play', 'llMDQ6rMWxVWbvdxs2yduVEtSrNCJUk1')" value="change video"/>
+			<script>
+				var height = $("#log").height();
+				var log = function(message) {
+					var s = new Date().toLocaleTimeString() + " :: " + message + "<br/>";
+					$("#log").append(s);
+					height += 20;
+					$("#log").scrollTop(height);
+				}
+				var build = function() {
+				$("#player1").ooyala({
+					height:355,
+					width:460,
+					playhead: 40,
+					embedCode: 'h2eDlxNTqJIAQuhsL3EWqDajpId_6ec2', //'9yNmhmMjqFo9h1GSeHr0uE2Wgccet-C6',
+					hide: ['sharing', 'embed'],
+					loadRatingsApi: true,
+					thruParams: {
+						LiveRail: 'laskdfjlaskdj'
+					},
+					onPlay: function() {
+						log("play");
+					},
+					onPause: function() {
+						log("pause");
+					},
+					onBuffering: function() {
+						log("buffering");
+					},
+					onSeek: function (newPlayheadTime, oldPlayheadTime) { 
+						log("seek: " + oldPlayheadTime + " to " + newPlayheadTime);
+					},
+					onError: function(errorCode, errorText) { 
+						log("error: " + errorCode + "-" + errorText);
+					},
+					onActivePanelChanged: function (activePanel) { 
+						log("panel changed: " + activePanel);
+					},
+					onAdStarted: function (cancelable, format, source, type) { 
+						log("ad started: cancelable-" + cancelable + ", format-" + format + ", source-" + source + ", type-" + type);
+					},
+					onAdCompleted: function (cancelable, format, source, type) { 
+						log("ad complete: cancelable-" + cancelable + ", format-" + format + ", source-" + source + ", type-" + type);
+					},
+					onAdClicked: function (cancelable, format, source, type) { 
+						log("ad clicked: cancelable-" + cancelable + ", format-" + format + ", source-" + source + ", type-" + type);
+					},
+					onApiReady: function () { 
+						log("api ready");
+					},
+					onCompanionAdsReady: function (cancelable, type, companionAds) { 
+						log("companion ads ready: cancelable-" + cancelable + ", type-" + type);
+						console.log(companionAds);
+					},
+					onCurrentItemEmbedCodeChanged: function (description, embedCode, hostedAtURL, lineup, promo, time, title) { 
+						log("current embed code changed: " + description + "-" + embedCode + "-" + hostedAtURL + "-" + lineup + "-" + promo + "-" + time + "-" + title);
+					},
+					onEmbedCodeChanged: function (description, embedCode, hostedAtURL, lineup, promo, time, title) { 
+						log("embed code changed: " + description + "-" + embedCode + "-" + hostedAtURL + "-" + lineup + "-" + promo + "-" + time + "-" + title);
+					},
+					onFullscreenChanged: function (state) { 
+						log("fullscreen state: " + state);
+					},//state is 'normal' or 'fullScreen'
+					onLoadComplete: function () { 
+						log("loadComplete");
+					},
+					onMetadataReady: function (metadata) { 
+						log("metadata ready");
+						console.log(metadata);
+					},
+					onPlayComplete: function () { 
+						log("playComplete");
+					},
+					onPlayerEmbedded: function () { 
+						log("player embeded");
+					},
+					onPlayheadTimeChanged: function (playheadTime) { 
+						log("playhead time changed: " + playheadTime);
+					},
+					onRatingsApiReady: function () { 
+						log("ratings api ready");
+					},
+					onRelatedMediaReady: function (relatedMedia) { 
+						log("related media ready");
+						console.log(relatedMedia);
+					},
+					onStartContentDownload: function () { 
+						log("start content download");
+					},
+					onTargetBitrateQualityChanged: function (targetBitrateQuality) { 
+						log("quality changed: " + targetBitrateQuality);
+					},
+					onTargetBitrateChanged: function (targetBitrate) { 
+						log("bitrate changed: " + targetBitrate);
+					},
+					onTotaltimeChanged: function (totalTime) { 
+						log("total time changed: " + totalTime);
+					},
+					onVolumeChanged: function (volume) { 
+						log("volume changed: " + volume);
+					}
+					
+				});
+				}
+				build();
+			</script>
+		</div>
+		<h1>Defaults</h1> 
+		<div class="example">
+			<p class='comment'>/*query string parameters*/</p>
+			<p>height: 355,</p>
+        	<p>width: 425,</p>
+        	<p>embedCode: "hpbnExMjqlog8G5Zdzkee4DwyAd1Ymba",</p>
+        	<p>playhead: 0,</p>
+        	<p>autoPlay: false,</p>
+			<p>view: "normal",<span class='comment'>//'normal' or 'channel'</span></p>
+			<p>loop: false,</p>
+			<p>chromeless: false,</p>
+			<p>alwaysShowScrubber: false,</p>
+			<p>browserPlacement: null,<span class='comment'>//'left', 'right', 'left40', 'left40px'</span></p>
+			<p>hide: null, <span class='comment'>//['all', 'volume', 'fullscreen', 'channels', 'sharing', 'info', 'embed', 'endscreen']</span></p>
+			<p>transition: 'play', <span class='comment'>//'play' or 'selector'</span></p>
+        	<p>wmode: 'opaque',</p>
+			<br/>
+			<p class='comment'>/*have the video ready for ratings*/</p>
+			<p>loadRatingsApi: false,</p>
+        	<br/>
+			<p class='comment'>/*player events*/</p>
+			<p>onPlay: function () { },</p>
+        	<p>onPause: function () { },</p>
+        	<p>onStop: function () { },</p>
+        	<p>onBuffering: function () { },</p>
+        	<p>onSeek: function (newPlayheadTime, oldPlayheadTime) { },</p>
+			<p>onError: function(errorCode, errorText) { },</p>
+			<br/>
+        	<p>onActivePanelChanged: function (activePanel) { },<span class='comment'>//activePanel is 'null', 'more', 'syndication', 'embed', 'info', 'channels'</span></p>
+        	<p>onAdStarted: function (cancelable, format, source, type) { },</p>
+        	<p>onAdCompleted: function (cancelable, format, source, type) { },</p>
+        	<p>onAdClicked: function (cancelable, format, source, type) { },</p>
+        	<p>onApiReady: function () { },</p>
+        	<p>onCompanionAdsReady: function (cancelable, type, companionAds) { },</p>
+        	<p>onCurrentItemEmbedCodeChanged: function (description, embedCode, hostedAtURL, lineup, promo, time, title) { },</p>
+        	<p>onEmbedCodeChanged: function (description, embedCode, hostedAtURL, lineup, promo, time, title) { },</p>
+        	<p>onFullscreenChanged: function (state) { },//state is 'normal' or 'fullScreen'</p>
+        	<p>onMetadataReady: function (metadata) { },</p>
+        	<p>onPlayComplete: function () { },</p>
+        	<p>onPlayerEmbedded: function () { },</p>
+        	<p>onPlayheadTimeChanged: function (playheadTime) { },</p>
+        	<p>onRatingsApiReady: function () { },</p>
+        	<p>onRelatedMediaReady: function (relatedMedia) { },</p>
+       		<p>onStartContentDownload: function () { },</p>
+        	<p>onTargetBitrateQualityChanged: function (targetBitrateQuality) { },</p>
+        	<p>onTargetBitrateChanged: function (targetBitrate) { },</p>
+        	<p>onTotaltimeChanged: function (totalTime) { },</p>
+        	<p>onVolumeChanged: function (volume) { }</p>
+		</div>
+	</section>
+	<section>
+		<h1>Documentation of Player Defaults</h1>
+			<p>see the ooyala player documentation for more information <a href='http://www.ooyala.com/support/docs/player_api'>Player API</a></p>
+		<section class="player-preferences">
+			<h1>Player Configuration Parameters</h1>
+			
+			<h3>height</h3>
+			<p>Assign the height of the player.  By default this is at 355px.</p>
+	
+			<h3>width</h3>
+			<p>Assign the width of the player.  By default this is at 425px.</p>
+	
+			<h3>embedCode</h3>
+			<p>Assign the embedCode for the initial Ooyala video to play in the player.</p>
+			
+			<h3>playhead</h3>
+			<p>The time at which the video will start playing. (currently not working)</p>
+			
+			<h3>autoPlay</h3>
+			<p>This attribute will autoplay upon load, this wont work when done on an iOS device. Values can be true or false.</p>
+			
+			<h3>view</h3>
+			<p>The view the player will have when it loads, can be 'normal' or 'channel'. Default is channel</p>
+			
+			<h3>loop</h3>
+			<p>Will loop the video once finished or if it is a channel will loop the channel once finished</p>
+			
+			<h3>chromeless</h3>
+			<p>removes all controls from the player, and only shows the video. Values can be true or false</p>
+			
+			<h3>hide</h3>
+			<p>
+				Hides specific player elements from the page.  Values can be 'all', 'volume', 'fullscreen', 'channels', 'sharing', 'info', 'embed', 'endscreen'. <br/>
+				These values are passed into the method as an array of items eg: hide: ['volume', 'sharing']
+			</p>
+			
+			<h3>alwaysShowScrubber</h3>
+			<p>doesnt hide the scrubber when the mouse is not on the player. Values can be true or false</p>
+			
+			<h3>browserPlacement</h3>
+			<p>
+				For a channel, specify where external controls are placed, either left or right. Can include a percentage or a width in pixels that will be occupied by the controls as in left40 for left and 40% of the width, or left200px to specify left and 200 pixels. The default left or right value is 50%.<br/>
+				eg: browserPlacement: 'left40%'
+			</p>
+			
+			<h3>transition</h3>
+			<p>Specify play to show the next movie or specify selector to show the channel browser after each video in a channel. Default is play.</p>
+			
+			<h3>wmode</h3>
+			<p>Sets the transparency,layering and positioning in a browser. Possible values are window, opaque, or transparent. Opaque players sit on the lowest level whereas transparent players sit at the top most level. Default is opaque</p>
+		</section>
+		<section class="basic-callbacks">
+			<h1> Basic Callbacks</h1>
+			
+			<h3>loadRatingsApi</h3>
+			<p>(Currently Not Working) Loads the Ratings API. The Ratings API should be loaded before calling any of the ratings API functions, like incrementCurrentItemRating() and getCanRateCurrentItem(). The ratingsApiReady event will be dispatched when the API is ready for use.</p>
+			
+			<h3>onPlay</h3>
+			<p>After the player triggers a play event, the onPlay method is called and passed the id that was played. This can come in handy in situations where you may want to track / utilize the play event and possibly hook in your analytics.</p>
+			
+			<h3>onPause</h3>
+			<p>Similar to onPlay, onPause is called after the player is paused.</p>
+			
+			<h3>onStop</h3>
+			<p> onStop is after the player has been stopped.</p>
+			
+			<h3>onBuffering</h3>
+			<p>onBuffering is after the player is started to buffer the content</p>
+			
+			<h3>onSeek</h3>
+			<p>trigger that will return the old playhead value and new playhead value when the user seeks the video</p>
+			
+			<h3>onError</h3>
+			<p>if an error happens to the player such as content not found, or unauthorized content</p>
+		</section>
+		<section class="advanced-callbacks">
+			<h1>Advanced Callbacks</h1>
+			
+			<h3>onActivePanelChanged</h3>
+			<p>The Info, Embed, Share or Channel panel has been exposed or hidden. will pass back what the active panel is.<br/>
+			   values can be 'null', 'more', 'syndication', 'embed', 'info', 'channels'</p>
+        	<h3>onAdStarted</h3>
+        	<p>an ad has started. Passed in values are cancelable, format, source, type</p>
+        	<h3>onAdCompleted</h3>
+        	<p>an ad has finished. Passed in values are cancelable, format, source, type</p>
+        	<h3>onAdClicked</h3>
+        	<p>an ad has been clicked. Passed in values are cancelable, format, source, type</p>
+        	<h3>onApiReady</h3>
+        	<p>
+				The player is ready to receive API calls like playMovie(), getItem(), 
+				etc. Wait for this event to be dispatched before making any API calls. 
+				This event is fired each time the player's embedCode is changed. 
+			</p>
+        	<h3>onCompanionAdsReady</h3>
+        	<p>One or more companion ads are ready to be displayed. Only applicable to VAST compliant ads.<br/>
+			   Passed in values are cancelable, type, companionAds (array of the ads and their information[clickThroughURL, creativeType, resourceType, url])
+			</p>
+        	<h3>onCurrentItemEmbedCodeChanged</h3>
+        	<p>Current item has changed<br/>
+				Passed in values are description, embedCode, hostedAtURL, lineup, promo, time, title
+			</p>
+        	<h3>onEmbedCodeChanged</h3>
+        	<p>Top-level player item has changed <br/>
+			   passed in values are escription, embedCode, hostedAtURL, lineup, promo, time, title
+			</p>
+        	<h3>onFullscreenChanged</h3>
+        	<p>Full-screen state has been toggled<br/>
+				passed in value is state which can be either 'normal' or 'fullscreen'
+			</p>
+        	<h3>onMetadataReady</h3>
+        	<p></p>
+        	<h3>onPlayComplete</h3>
+        	<p></p>
+        	<h3>onPlayerEmbedded</h3>
+        	<p></p>
+        	<h3>onPlayheadTimeChanged</h3>
+        	<p></p>
+        	<h3>onRatingsApiReady</h3>
+        	<p></p>
+        	<h3>onRelatedMediaReady</h3>
+        	<p></p>
+       		<h3>onStartContentDownload</h3>
+       		<p></p>
+        	<h3>onTargetBitrateQualityChanged</h3>
+        	<p></p>
+        	<h3>onTargetBitrateChanged</h3>
+        	<p></p>
+        	<h3>onTotaltimeChanged</h3>
+        	<p></p>
+        	<h3>onVolumeChanged</h3>
+        	<p></p>
+		</section>
+	</section>
+	<section>
+		<h1>Documentation of Player Methods</h1>
+		<section class="methods">
+			<h3>play</h3>
+			<p>
+				Play has three different implementations. The first, is to play the active video, if you do not specify a parameter. 
+			</p>
+			<aside class='example'>
+				$("#player1").ooyala("play");
+			</aside>
+			<p>
+				If you specify a parameter, and that parameter is a string, then the player will cue and play the specified video. 
+			</p>
+			<aside class='example'>
+				$("#player1").ooyala("play", "hpbnExMjqlog8G5Zdzkee4DwyAd1Ymba");
+			</aside>
+			<p>
+				Lastly, if you specify a parameter, and that parameter is an OBJECT, you will have the ability to pass in the id and the start time -- {embedCode: "",time:""}.
+			</p>
+			<aside class='example'>
+				$("#player1").ooyala("play", {
+						embedCode: "hpbnExMjqlog8G5Zdzkee4DwyAd1Ymba",
+						time: 20
+					});
+			</aside>
+			
+			<h3>pause</h3>
+			
+			<p>pauses the video</p>
+			<aside class='example'>
+				$("#player1").ooyala("pause");
+			</aside>
+			<h3>stop</h3>
+			<p>Stops the video and moves the playhead to the start of the video</p>
+			<aside class='example'>
+				$("#player1").ooyala("stop");
+			</aside>
+			<h3>seek</h3>
+			<p>specify a time in seconds for the player to seek to and the player will skip to that time. This also triggers the onSeek event.</p>
+			<aside class='example'>
+				$("#player1").ooyala("seek", 20);
+			</aside>
+			
+			<h3>fastForward</h3>
+			<p>specify a time in seconds to fast forward the video, takes the current time and adds the time</p>
+			<aside class='example'>
+				$("#player1").ooyala("fastForward", 20);
+			</aside>
+			
+			<h3>rewind</h3>
+			<p>specify a time in secounds to rewind the video, takes the current time and subtracts the time.</p>
+			<aside class='example'>
+				$("#player1").ooyala("rewind", 20);
+			</aside>
+			
+			<h3>volume</h3>
+			<p>Volume has two variations - getter and setter. Simply pass in "volume" to get the volume {0,1}, </p>
+			<aside class='example'>
+				$("#player1").ooyala("volume");
+			</aside>
+			<p>and pass a parameter within { 0, 1} to specify a new volume.</p>
+			<aside class='example'>
+				$("#player1").ooyala("volume", .2);
+			</aside>
+			<h3>quality</h3>
+			<p>Quality has three variations. first is to get the current quality of the video.  This will return an object with the bitrate quality and the bitrate</p>
+			<aside class='example'>
+				$("#player1").ooyala("quality");
+			</aside>
+			<p>Second, set the quality with one of the keywords 'auto', 'high', 'medium', or 'low' and the player will transition to use the new quality setting if available</p>
+			<aside class='example'>
+				$("#player1").ooyala("quality", "medium");
+			</aside>
+			<p>Third, is to set the bitrate quality using a number that represents the bitrate you would like.</p>
+			<aside class='example'>
+				$("#player1").ooyala("quality", 800);
+			</aside>
+			<h3>embedCode</h3>
+			<p>returns the current embed code for the video that is playing</p>
+			<aside class='example'>
+				$("#player1").ooyala("embedCode");
+			</aside>
+			<h3>data</h3>
+			<p>
+				Typically you will want to access the information thats available 
+				from the player. The data method returns an object with the information 
+				of the player. The object includes information on the video (embedCode, title, description, time, lineup, promo, hostedAtURL)
+				any errors that just occured (error.code, error.text), the status of the player (fullscreen, nomal),
+				the information of the item (this may include channel information),
+				the volume, the playhead time, the state of the player, all the available bitrates and qualities for the player,
+				the target bitrate and quality, and how much as buffered
+			</p>
+			<aside class='example'>
+				$("#player1").ooyala("data");
+			</aside>
+			<h3>player</h3>
+			<p>this will return the actual player object from the DOM. This is helpful when you would like to use things from the ooyala api that my not be implemented the way you would like in the plugin.</p>
+			<aside class='example'>
+				$("#player1").ooyala("player");
+			</aside>
+			<h3>destroy</h3>
+			<p>Removes the player from the page, and unbinds everything that the player is bound to (events, data, DOM)</p>
+			<aside class='example'>
+				$("#player1").ooyala("destroy");
+			</aside>
+			<h3>skipAd</h3>
+			<p>currently not working. If an ad is playing will skip the ad</p>
+			<aside class='example'>
+				$("#player1").ooyala("skipAd");
+			</aside>
+			<h3>related</h3>
+			<p>gets an object of any related media that has been specified for the video in backlot</p>
+			<aside class='example'>
+				$("#player1").ooyala("related");
+			</aside>
+			<h3>metadata</h3>
+			<p>gets any metadata that has been added to the video in backlot</p>
+			<aside class='example'>
+				$("#player1").ooyala("metadata");
+			</aside>
+			<h3>changeChannelVideo</h3>
+			<p>switches to a specific video within a channel</p>
+			<aside class='example'>
+				$("#player1").ooyala("changeChannelVideo", "hpbnExMjqlog8G5Zdzkee4DwyAd1Ymba");
+			</aside>
+		</section>
+	</section>
+		
+		
+		
+</body>
