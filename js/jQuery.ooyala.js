@@ -20,10 +20,7 @@ TODO:
 	
 	skipping ads not working
 	
-	setting the ad pass-through parameters and working with ad networks *events for ads are working*
-	
 	look into using video tag callbacks for things such as buffered
-	
 	
 */
 
